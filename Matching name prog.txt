@@ -1,0 +1,106 @@
+Ex-1
+
+// You are using Java
+import java.util.*;
+class Main{
+    public static void main(String a[]){
+        Scanner sc=new Scanner(System.in);
+        ArrayList<String> al=new ArrayList<>();
+        int x=sc.nextInt();
+        sc.nextLine();
+        for(int i=0;i<x;i++){
+            String str=sc.nextLine();
+            al.add(str);
+        }
+        String s=sc.next();
+        boolean flag=false;
+        for(String str:al){
+            if(str.startsWith(s)){
+            System.out.println(str);
+            flag=true;
+            }
+        }
+        if(flag==false)
+        System.out.println("No matching name found for "+s);
+    }
+}
+
+input-
+6
+Arman
+Rajat Kumar
+Mike
+Sohan
+Menu k
+Rohit k
+M
+
+
+
+
+Ex-2
+-----
+
+import java.util.*;
+class Emp{
+    private String name;
+    private int age;
+    Emp(String name,int age){
+        this.name=name;
+        this.age=age;
+    }
+    
+    public String getName(){
+    return name;
+    }
+    public int getAge(){
+        return age;
+    }
+    
+    public String toString(){
+        return "Name: "+name+", Age: "+age;
+    }
+}
+
+class Main{
+    public static void main(String a[]){
+        Scanner sc=new Scanner(System.in);
+        ArrayList<Emp> al=new ArrayList<>();
+        int x=sc.nextInt();
+        for(int i=0;i<x;i++){
+            sc.nextLine();
+            String name=sc.nextLine();
+            int age=sc.nextInt();
+            Emp e=new Emp(name,age);
+            al.add(e);
+        }
+        String s=sc.next();
+        boolean flag=false;
+        for(Emp e:al){
+            if(e.getName().startsWith(s)){
+            System.out.println(e);
+            flag=true;
+            }
+        }
+        if(flag==false)
+        System.out.println("No matching name found for "+s);
+    }
+}
+
+input-
+
+6
+Arman
+25
+Rajat Kumar
+27
+Mike
+31
+Sohan
+22
+Menu k
+21
+Rohit k
+30
+M
+

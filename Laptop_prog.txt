@@ -1,0 +1,319 @@
+// You are using Java
+import java.util.*;
+class Laptop implements Comparable<Laptop>{
+    private int sno;
+    private String brand;
+    private String model;
+    private double price;
+    private boolean sold;
+    private static int counter=1001;
+    Laptop(String brand,String model,double price){
+        sno=counter++;
+        this.brand=brand;
+        this.model=model;
+        this.price=price;
+        sold=false;
+    }
+    
+    public int getSno(){
+        return sno;
+    }
+    
+    public String getBrand(){
+        return brand;
+    }
+    
+    public String getModel(){
+        return brand;
+    }
+    
+    public double getPrice(){
+        return price;
+    }
+    
+    public void sale(){
+        sold=true;
+    }
+    
+    public boolean isSold(){
+        return sold;
+    }
+    
+    @Override
+    public int compareTo(Laptop l){
+        return Double.compare(l.getPrice(),this.getPrice());
+        //return this.getBrand().compareTo(l.getBrand());
+    }
+    
+    @Override
+    public String toString(){
+        return "Sno: "+sno+", Brand: "+brand+", Model: "+model+", Price: "+String.format("%.2f",price)+", Sold: "+sold;
+    }
+}
+
+class BrandComparator implements Comparator<Laptop>{
+    
+    @Override
+    public int compare(Laptop l1,Laptop l2){
+        return l1.getBrand().compareTo(l2.getBrand());
+    }
+}
+
+class LaptopManager{
+    ArrayList<Laptop> al=new ArrayList<>();
+    
+    void addLaptop(String brand,String model,double price){
+        Laptop l=new Laptop(brand,model,price);
+        al.add(l);
+    }
+    
+    void purchaseLaptop(int sno){
+        boolean flag=false;
+        for(Laptop l:al){
+            if(l.getSno()==sno){
+                l.sale();
+                System.out.println("Laptop with Sno: "+sno+" has been sold.");
+                flag=true;
+                break;
+            }
+        }
+        if(flag==false)
+        System.out.println("Laptop with Sno: "+sno+" not available in store.");
+    }
+    
+    void deleteLaptop(int sno){
+        boolean flag=false;
+         for(Laptop l:al){
+             if(l.getSno()==sno){
+                 al.remove(l);  
+                 System.out.println("Laptop with Sno: "+sno+" is deleted..");
+                 flag=true;
+                 break;
+             }
+         }   
+         if(flag==false)
+         System.out.println("Laptop with Sno: "+sno+" not found in store..");
+    }
+    
+    int getUnSoldLaptops(){
+        int count=0;
+        for(Laptop l:al){
+            if(l.isSold()==false)
+            count++;
+        }
+        return count;
+    }
+    void displayLaptops(){
+        Collections.sort(al);
+        System.out.println("Laptop Details:");
+        for(Laptop l:al)
+        System.out.println(l);
+    }
+    
+    void displayUnsoldLaptops(){
+         Collections.sort(al,new BrandComparator());
+        for(Laptop l:al){
+            if(l.isSold()==false)
+            System.out.println(l);
+        }
+    }
+}
+
+
+class Main{
+    public static void main(String a[]){
+        LaptopManager mgr=new LaptopManager();
+        Scanner sc=new Scanner(System.in);
+        int x=sc.nextInt();
+        for(int i=0;i<x;i++){
+            sc.nextLine();
+            String brand=sc.nextLine();
+            String model=sc.nextLine();
+            double price=sc.nextDouble();
+            mgr.addLaptop(brand,model,price);
+        }
+        mgr.displayLaptops();
+        int sno=sc.nextInt();
+        mgr.purchaseLaptop(sno);
+        mgr.displayLaptops();
+        sno=sc.nextInt();
+        mgr.deleteLaptop(sno);
+        mgr.displayLaptops();
+        System.out.println("Unslod laptops: "+mgr.getUnSoldLaptops());
+        mgr.displayUnsoldLaptops();
+    }
+}
+
+input-
+
+4
+HP
+hp1
+50000
+Dell
+inspiron1
+65000
+Apple
+macbook3
+120000
+Acer
+ACa12 kjk
+45000
+1002
+1001
+
+
+-------Using HashMap
+
+// You are using Java
+// You are using Java
+// You are using Java
+import java.util.*;
+class Laptop implements Comparable<Laptop>{
+    private int sno;
+    private String brand;
+    private String model;
+    private double price;
+    private boolean sold;
+    private static int counter=1001;
+    Laptop(String brand,String model,double price){
+        sno=counter++;
+        this.brand=brand;
+        this.model=model;
+        this.price=price;
+        sold=false;
+    }
+    
+    public int getSno(){
+        return sno;
+    }
+    
+    public String getBrand(){
+        return brand;
+    }
+    
+    public String getModel(){
+        return brand;
+    }
+    
+    public double getPrice(){
+        return price;
+    }
+    
+    public void sale(){
+        sold=true;
+    }
+    
+    public boolean isSold(){
+        return sold;
+    }
+    
+    @Override
+    public int compareTo(Laptop l){
+        return Double.compare(l.getPrice(),this.getPrice());
+        //return this.getBrand().compareTo(l.getBrand());
+    }
+    
+    @Override
+    public String toString(){
+        return "Sno: "+sno+", Brand: "+brand+", Model: "+model+", Price: "+String.format("%.2f",price)+", Sold: "+sold;
+    }
+}
+
+class BrandComparator implements Comparator<Laptop>{
+    
+    @Override
+    public int compare(Laptop l1,Laptop l2){
+        return l1.getBrand().compareTo(l2.getBrand());
+    }
+}
+
+class LaptopManager{
+    HashMap<Integer,Laptop> map=new HashMap<>();
+    
+    void addLaptop(String brand,String model,double price){
+        Laptop l=new Laptop(brand,model,price);
+        map.put(l.getSno(),l);
+    }
+    
+    void purchaseLaptop(int sno){
+               if(map.containsKey(sno)){
+                map.get(sno).sale();
+                System.out.println("Laptop with Sno: "+sno+" has been sold.");
+               }else
+                System.out.println("Laptop with Sno: "+sno+" not available in store.");
+    }
+    
+    void deleteLaptop(int sno){
+                if(map.containsKey(sno)){
+                map.remove(sno);
+                System.out.println("Laptop with Sno: "+sno+" has been sold.");
+               }else
+                System.out.println("Laptop with Sno: "+sno+" not available in store.");
+    }
+    
+    int getUnSoldLaptops(){
+        int count=0;
+        for(Map.Entry<Integer,Laptop> me:map.entrySet()){
+            if(me.getValue().isSold()==false)
+            count++;
+        }
+        return count;
+    }
+    
+    void displayLaptops(){
+        
+        ArrayList<Laptop> list=new ArrayList<>(map.values());  //if we need sorting 1
+        Collections.sort(list); // 2
+        System.out.println("Laptop Details:");
+        for(Laptop l:list)
+        System.out.println(l);
+    }
+    
+    void displayUnsoldLaptops(){
+         ArrayList<Laptop> list=new ArrayList<>(map.values());
+        Collections.sort(list);
+        for(Laptop l:list){
+            if(l.isSold()==false)
+            System.out.println(l);
+        }
+    }
+}
+
+
+class Main{
+    public static void main(String a[]){
+        LaptopManager mgr=new LaptopManager();
+        Scanner sc=new Scanner(System.in);
+        int x=sc.nextInt();
+        for(int i=0;i<x;i++){
+            sc.nextLine();
+            String brand=sc.nextLine();
+            String model=sc.nextLine();
+            double price=sc.nextDouble();
+            mgr.addLaptop(brand,model,price);
+        }
+        mgr.displayLaptops();
+        int sno=sc.nextInt();
+        mgr.purchaseLaptop(sno);
+        mgr.displayLaptops();
+        sno=sc.nextInt();
+        mgr.deleteLaptop(sno);
+        mgr.displayLaptops();
+        System.out.println("Unslod laptops: "+mgr.getUnSoldLaptops());
+        mgr.displayUnsoldLaptops();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
